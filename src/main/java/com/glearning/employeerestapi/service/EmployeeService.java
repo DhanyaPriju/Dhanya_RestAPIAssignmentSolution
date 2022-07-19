@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 import org.springframework.stereotype.Service;
+import org.springframework.data.domain.Sort;
 
 import com.glearning.employeerestapi.model.Employee;
 import com.glearning.employeerestapi.repository.EmployeeRepository;
@@ -12,14 +13,14 @@ import lombok.RequiredArgsConstructor;
 @Service
 @RequiredArgsConstructor
 public class EmployeeService {
-	
-private final EmployeeRepository employeeRepository;
-	
+
+	private final EmployeeRepository employeeRepository;
+
 	@Transactional
 	public Employee saveEmployee(Employee employee) {
 		return employeeRepository.save(employee);
 	}
-	
+
 	@Transactional
 	public List<Employee> findAllEmployees() {
 		return employeeRepository.findAll();
@@ -27,16 +28,32 @@ private final EmployeeRepository employeeRepository;
 
 	@Transactional
 	public Employee findById(long id) {
-		return employeeRepository.findById(id).orElseThrow(()->new IllegalArgumentException("No employee found."));
+		return employeeRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("No employee found."));
 	}
 
 	@Transactional
 	public void deleteEmployee(long id) {
 		employeeRepository.deleteById(id);
 	}
-	
+
 	@Transactional
 	public Employee updateEmployee(Employee employee, long employeeId) {
 		return employeeRepository.save(employee);
+	}
+
+	// Employee Record Sorting by First Name
+	@Transactional
+	public List<Employee> fetchEmployeeListSorted(String order) {
+
+		if (order.equals("asc")) {
+
+			return (List<Employee>) employeeRepository.findAll(Sort.by("firstName").ascending());
+
+		}
+		if (order.equals("desc")) {
+
+			return (List<Employee>) employeeRepository.findAll(Sort.by("firstName").descending());
+		}
+		return null;
 	}
 }

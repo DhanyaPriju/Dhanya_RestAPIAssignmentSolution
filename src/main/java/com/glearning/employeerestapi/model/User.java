@@ -25,7 +25,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name="users")
+@Table(name = "users")
 @EqualsAndHashCode(exclude = "roles")
 @ToString(exclude = "roles")
 public class User {
@@ -33,22 +33,22 @@ public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long Id;
-	
-	@Column(name="USER_NAME")
+
+	@Column(name = "USER_NAME")
 	private String userName;
-	
-	@Column(name="PASSWORD")
+
+	@Column(name = "PASSWORD")
 	private String password;
-	
+
 	@ManyToMany(mappedBy = "users", fetch = FetchType.EAGER)
-	@Column(name="ROLES")
+	@Column(name = "ROLES")
 	private Set<Role> roles;
-	
+
 	public void addRole(Role role) {
-		if(this.roles == null) {
+		if (this.roles == null) {
 			this.roles = new HashSet<Role>();
 		}
-		
+
 		this.roles.add(role);
 		role.getUsers().add(this);
 	}

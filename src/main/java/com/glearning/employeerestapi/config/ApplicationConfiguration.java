@@ -32,10 +32,12 @@ public class ApplicationConfiguration extends WebSecurityConfigurerAdapter {
 		httpSecurity.headers().frameOptions().disable();
 		httpSecurity.csrf().disable();
 		httpSecurity.authorizeRequests().antMatchers("/h2-console**", "/h2-console/**").permitAll()
-				.antMatchers(HttpMethod.GET, "/api/employees/**").hasAnyRole("USER", "ADMIN").and().authorizeRequests()
-				.antMatchers(HttpMethod.POST, "/api/employees/**").hasRole("ADMIN")
+				.antMatchers(HttpMethod.GET, "/api/employees/**", "/api/roles/**", "/api/user/**")
+				.hasAnyRole("USER", "ADMIN").and().authorizeRequests()
+				.antMatchers(HttpMethod.POST, "/api/employees/**", "/api/roles/**", "/api/user/**").hasRole("ADMIN")
 
-				.antMatchers(HttpMethod.DELETE, "/api/employees/**").hasRole("ADMIN").anyRequest().authenticated()
+				.antMatchers(HttpMethod.DELETE, "/api/employees/{Id}**", "/api/roles/{Id}**", "/api/user/{Id}**")
+				.hasRole("ADMIN").anyRequest().authenticated()
 
 				.and().httpBasic().and()
 				/*

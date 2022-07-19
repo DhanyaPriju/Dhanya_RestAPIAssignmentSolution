@@ -9,5 +9,4 @@ import com.glearning.employeerestapi.model.User;
 public interface UserRepository extends JpaRepository<User, Long> {
 	
 	Optional<User> findByUserName(String userName);
-
 }

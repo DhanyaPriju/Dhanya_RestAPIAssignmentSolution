@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -45,5 +47,14 @@ public class EmployeeController {
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void deleteEmployee(@PathVariable("id") long employeeId) {
 		employeeService.deleteEmployee(employeeId);
+	}
+	
+	// Sort By First Name Operations
+	@GetMapping("/employee/sort")
+	@ResponseBody
+	public List<Employee> sortByFristName(@RequestParam String order) {
+
+		return employeeService.fetchEmployeeListSorted(order);
+
 	}
 }

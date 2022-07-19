@@ -26,9 +26,6 @@ import lombok.ToString;
 @NoArgsConstructor
 @Entity
 @Table(name="role")
-@ToString(exclude = "users")
-@EqualsAndHashCode(exclude = "users")
-
 public class Role {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
